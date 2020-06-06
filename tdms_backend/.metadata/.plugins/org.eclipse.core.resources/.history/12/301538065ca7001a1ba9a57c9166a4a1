@@ -1,0 +1,115 @@
+package in.codeblog.tdms.service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	UserService userService;
+
+	public Iterable<User> findAllTrainees() {
+		return userRepository.findByRole("trainee");
+	}
+
+	public Iterable<User> findAllTrainers() {
+		return userRepository.findByRole("trainer");
+	}
+
+	public Iterable<User> findAllUsers() {
+		return userRepository.findAll();
+
+	}
+
+
+	public String findTotalUsers() {
+		List<User> users = (List<User>) userService.findAllUsers();
+		return users.size() + "";
+
+	}
+
+	public String findTotalTrainees() {
+		List<User> trainees = (List<User>) userService.findAllTrainees();
+		return trainees.size() + "";
+
+	}
+
+	public String findTotalTrainers() {
+		List<User> trainers = (List<User>) userService.findAllTrainers();
+		return trainers.size() + "";
+	}
+
+	public String findTotalActiveTrainees() {
+		List<User> trainees = (List<User>) userService.findAllTrainees();
+		int totalNumberOfActiveTrainees = 0;
+		Iterator itr = trainees.iterator();
+		while (itr.hasNext()) {
+			User user = new User();
+			user = (User) itr.next();
+			if (user.getStatus().equalsIgnoreCase("active")) {
+				totalNumberOfActiveTrainees++;
+			}
+		}
+		return totalNumberOfActiveTrainees + "";
+
+	}
+
+	public String findTotalActiveTrainers() {
+		List<User> trainers = (List<User>) userService.findAllTrainers();
+		int totalNumberOfActiveTrainers = 0;
+		Iterator itr = trainers.iterator();
+		while (itr.hasNext()) {
+			User user = new User();
+			user = (User) itr.next();
+			if (user.getStatus().equalsIgnoreCase("active")) {
+				totalNumberOfActiveTrainers++;
+			}
+		}
+		return totalNumberOfActiveTrainers + "";
+
+	}
+
+	public String findTotalBlockTrainees() {
+		List<User> trainees = (List<User>) userService.findAllTrainees();
+		int totalNumberOfBlockTrainees = 0;
+		Iterator itr = trainees.iterator();
+		while (itr.hasNext()) {
+			User user = new User();
+			user = (User) itr.next();
+			if (user.getStatus().equalsIgnoreCase("block")) {
+				totalNumberOfBlockTrainees++;
+			}
+		}
+		return totalNumberOfBlockTrainees + "";
+
+	}
+
+	public String findTotalBlockTrainers() {
+		List<User> trainers = (List<User>) userService.findAllTrainers();
+		int totalNumberOfBlockTrainers = 0;
+		Iterator itr = trainers.iterator();
+		while (itr.hasNext()) {
+			User user = new User();
+			user = (User) itr.next();
+			if (user.getStatus().equalsIgnoreCase("block")) {
+				totalNumberOfBlockTrainers++;
+			}
+		}
+		return totalNumberOfBlockTrainers + "";
+
+	}
+
+	public void deleteUserById(Long id) {
+		userRepository.deleteById(id);
+	}
+
+}

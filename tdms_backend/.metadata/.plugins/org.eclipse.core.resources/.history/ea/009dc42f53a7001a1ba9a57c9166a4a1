@@ -1,0 +1,79 @@
+package in.codeblog.tdms.web;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.service.UserService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("tdmsapp/user")
+public class UserController {
+	@Autowired
+	UserService userService;
+	
+	@GetMapping("/trainees")
+	public Iterable<User> getAllTrainees(){
+		return userService.findAllTrainees();
+		
+	}
+	
+	@GetMapping("/trainers")
+	public Iterable<User> getAllTrainers(){
+		return userService.findAllTrainers();
+	}
+	
+	@GetMapping("/all")
+	public Iterable<User> getAllUsers(){
+		
+		return userService.findAllUsers();
+		
+	}
+	@GetMapping("/totalNumberOfUsers")
+	public ResponseEntity<?> getNumberOfUsers(){
+		List<User> users=(List<User>) userService.findAllUsers();
+		String totalNumberOfUsers=users.size()+"";
+		return new ResponseEntity<String>(totalNumberOfUsers, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfTrainees")
+	public ResponseEntity<?> getNumberOfTrainees(){
+		List<User> trainees=(List<User>) userService.findAllTrainees();
+		String totalNumberOfTrainees=trainees.size()+"";
+		return new ResponseEntity<String>(totalNumberOfTrainees, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfTrainers")
+	public ResponseEntity<?> getNumberOfTrainers(){
+		List<User> trainers=(List<User>) userService.findAllTrainers();
+		String totalNumberOfTrainers=trainers.size()+"";
+		return new ResponseEntity<String>(totalNumberOfTrainers, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfActiveTrainers")
+	public ResponseEntity<?> getNumberOfActiveTrainers(){
+		List<User> trainers=(List<User>) userService.findAllTrainers();
+		int totalNumberOfActiveTrainers=0;
+		Iterator itr=trainers.iterator();
+		while(itr.hasNext()) {
+			User user=new User();
+			user=(User) itr.next();
+			if(user.getStatus().equalsIgnoreCase("active")) {
+				totalNumberOfActiveTrainers++;
+			}
+		}
+		return new ResponseEntity<String>(totalNumberOfActiveTrainers+"", HttpStatus.OK);
+		
+	}
+
+}

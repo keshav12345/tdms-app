@@ -1,0 +1,21 @@
+package in.codeblog.tdms.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	UserRepository userRepository;	
+	
+	Iterable<User> getFindAllTrainees(){
+		return null;
+	}
+	Iterable<User> getFindAllUsers(){
+		return userRepository.findAll();
+	}
+
+}

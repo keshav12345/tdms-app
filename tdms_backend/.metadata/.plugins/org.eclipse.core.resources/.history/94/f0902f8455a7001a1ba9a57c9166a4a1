@@ -1,0 +1,69 @@
+package in.codeblog.tdms.service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	UserService userService;
+
+	public Iterable<User> findAllTrainees() {
+		return userRepository.findByRole("trainee");
+	}
+
+	public Iterable<User> findAllTrainers() {
+		return userRepository.findByRole("trainer");
+	}
+
+	public Iterable<User> findAllUsers() {
+		return userRepository.findAll();
+
+	}
+
+	public Iterable<User> findBlockUsers() {
+		return userRepository.findByStatus("block");
+	}
+
+	public Iterable<User> findActiveUsers() {
+		return userRepository.findByStatus("active");
+	}
+
+	public String findTotalUsers() {
+		List<User> users=(List<User>) userService.findAllUsers();
+		return users.size()+"";
+
+	}
+
+	public String findTotalTrainees() {
+		List<User> trainees=(List<User>) userService.findAllTrainees();
+		return trainees.size()+"";
+
+	}
+public String findTotalTrainers() {
+	List<User> trainers=(List<User>) userService.findAllTrainers();
+		return trainers.size()+"";
+	}
+public String findTotalActiveTrainees() {
+	
+}
+public String findTotalActiveTrainers() {
+	
+}
+public String findTotalBlockTrainees() {
+	
+}
+public String findTotalBlockTrainers() {
+	
+}
+
+}

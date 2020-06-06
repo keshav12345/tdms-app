@@ -1,0 +1,101 @@
+package in.codeblog.tdms.web;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.service.UserService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("tdmsapp/user")
+public class UserController {
+	@Autowired
+	UserService userService;
+	
+	@GetMapping("/trainees")
+	public Iterable<User> getAllTrainees(){
+		return userService.findAllTrainees();
+		
+	}
+	
+	@GetMapping("/trainers")
+	public Iterable<User> getAllTrainers(){
+		return userService.findAllTrainers();
+	}
+	
+	@GetMapping("/all")
+	public Iterable<User> getAllUsers(){
+		
+		return userService.findAllUsers();
+		
+	}
+	@GetMapping("/totalNumberOfUsers")
+	public ResponseEntity<?> getNumberOfUsers(){
+		String totalNumberOfUsers=userService.findTotalUsers();		
+		return new ResponseEntity<String>(totalNumberOfUsers, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfTrainees")
+	public ResponseEntity<?> getNumberOfTrainees(){
+		String totalNumberOfTrainees=userService.findTotalTrainees();
+		return new ResponseEntity<String>(totalNumberOfTrainees, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfTrainers")
+	public ResponseEntity<?> getNumberOfTrainers(){
+		String totalNumberOfTrainers=userService.findTotalTrainers();
+		return new ResponseEntity<String>(totalNumberOfTrainers, HttpStatus.OK);
+		
+	}
+	@GetMapping("/totalNumberOfActiveTrainers")
+	public ResponseEntity<?> getNumberOfActiveTrainers(){
+		String totalNumberOfActiveTrainers=userService.findTotalActiveTrainers();
+		return new ResponseEntity<String>(totalNumberOfActiveTrainers+"", HttpStatus.OK);		
+	}
+	@GetMapping("/totalNumberOfBlockTrainers")
+	public ResponseEntity<?> getNumberOfBlockTrainers(){
+		String totalNumberOfBlockTrainers=userService.findTotalBlockTrainers();
+		return new ResponseEntity<String>(totalNumberOfBlockTrainers+"", HttpStatus.OK);		
+	}
+	@GetMapping("/totalNumberOfActiveTrainees")
+	public ResponseEntity<?> getNumberOfActiveTrainees(){
+		String totalNumberOfActiveTrainers=userService.findTotalActiveTrainees();
+		return new ResponseEntity<String>(totalNumberOfActiveTrainers+"", HttpStatus.OK);		
+	}
+	@GetMapping("/totalNumberOfBlockTrainees")
+	public ResponseEntity<?> getNumberOfBlockTrainees(){
+		String totalNumberOfBlockTrainees=userService.findTotalBlockTrainees();
+		return new ResponseEntity<String>(totalNumberOfBlockTrainees+"", HttpStatus.OK);		
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long id){
+		userService.deleteUserById(id);
+		return new ResponseEntity<String>("User successfully deleted", HttpStatus.OK);
+	}
+	@PatchMapping("/{id}")
+	public ResponseEntity<?> changeStatus(@PathVariable Long id){
+		User user=userService.changeStatusById(id);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+		
+	}
+	@PatchMapping("/{id}/{newRole}")
+	public ResponseEntity<?> changeRole(@PathVariable Long id, @PathVariable String newRole){
+		User user =userService.changeRole(id,newRole);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+
+}

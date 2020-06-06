@@ -1,0 +1,26 @@
+package in.codeblog.tdms.service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import in.codeblog.tdms.domain.User;
+import in.codeblog.tdms.repository.UserRepository;
+
+@Service
+public class UserService {
+	@Autowired
+	UserRepository userRepository;	
+	
+	public Iterable<User> findAllTrainees(){
+		return userRepository.findByRole("trainee");
+	}
+	public Iterable<User> findAllUsers(){
+		return userRepository.findAll();
+		
+	}
+	
+
+}
