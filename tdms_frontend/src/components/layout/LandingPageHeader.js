@@ -10,7 +10,7 @@ class LandingPageHeader extends Component{
             <header id="main-header">
             <div className="container">
               <nav className="navbar fixed-top navbar-light bg-light pb-4 navbar-expand-lg">
-                  <a className="navbar-brand" href="#">YTDMS</a>
+                  <a className="navbar-brand" href="/">YTDMS</a>
                   <div className="d-flex flex-row order-2 order-lg-3">
                       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
                           <span className="navbar-toggler-icon"></span>
